@@ -4,12 +4,17 @@
         <header><a href = "index.html">Home</a></header>
     </head>
     <body>
-        <ul>
-            <li><a href = "tableViews/locationView.html">Location Table</a></li>
-            <li><a href = "tableViews/biomeView.html">Biome Table</a></li>
-            <li><a href = "tableViews/ecosystemView.html">Ecosystem Table</a></li>
-            <li><a href = "tableViews/plantView.html">Plant Table</a></li>
-            <li><a href = "tableViews/animalView.html">Animal Table</a></li>
-        </ul>
+        <form action="viewResult.html">
+            <label for="result">Choose a table to view:</label>
+            <select name="choice" id="choice">
+              <option value="location">location</option>
+              <option value="ecosystem">ecosystem</option>
+              <option value="biome">biome</option>
+              <option value="plant">plant</option>
+              <option value="animal">animal</option>
+            </select>
+            <br><br>
+            <input type="submit" value="view">
+          </form>
     </body>
 </html>

@@ -4,5 +4,18 @@
         <header><a href = "index.html">Home</a></header>
     </head>
     <body>
+        <form action="searchResult.html">
+            <label for="result">Choose a table to search:</label>
+            <select name="choice" id="choice">
+              <option value="location">location</option>
+              <option value="ecosystem">ecosystem</option>
+              <option value="biome">biome</option>
+              <option value="plant">plant</option>
+              <option value="animal">animal</option>
+            </select>
+            <input type="text" name="search" placeholder="Search..">
+            <br><br>
+            <input type="submit" value="search">
+          </form>
     </body>
 </html>
