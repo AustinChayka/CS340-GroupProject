@@ -4,17 +4,22 @@
         <header><a href = "index.html">Home</a></header>
     </head>
     <body>
-        <form action="viewResult.html">
+        <form>
             <label for="result">Choose a table to view:</label>
-            <select name="choice" id="choice">
+            <select name="choice" id="choice" onchange="actionFunc()">
               <option value="location">location</option>
               <option value="ecosystem">ecosystem</option>
               <option value="biome">biome</option>
               <option value="plant">plant</option>
               <option value="animal">animal</option>
             </select>
-            <br><br>
-            <input type="submit" value="view">
           </form>
     </body>
 </html>
+
+<script>
+  function actionFunc() {
+      var e = document.getElementById("choice");
+      window.location.href = "tablePages/".concat(e.value).concat(".html");
+  }
+</script>

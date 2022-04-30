@@ -4,5 +4,20 @@
         <header><a href = "index.html">Home</a></header>
     </head>
     <body>
+        <form>
+            <label for="action">Choose action:</label>
+            <select name="choice" id="choice" onchange = "actionFunc()">
+              <option value="addEntry">Add entry</option>
+              <option value="removeEntry">Remove entry</option>
+              <option value="editEntry">Edit entry</option>
+            </select>
+          </form>
     </body>
 </html>
+
+<script>
+    function actionFunc() {
+        var e = document.getElementById("choice");
+        window.location.href = "editPages/".concat(e.value).concat(".html");
+    }
+</script>
