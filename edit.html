@@ -1,23 +1,18 @@
 <html>
     <head>
         <title>Edit Database</title>
-        <header><a href = "index.html">Home</a></header>
+        <header><a href = "/">Home</a></header>
     </head>
     <body>
-        <form>
-            <label for="action">Choose action:</label>
-            <select name="choice" id="choice" onchange = "actionFunc()">
+        <form action = "/editAction/" method = "POST">
+            <label for="choice">Choose action:</label>
+            <select name="choice" id="choice">
               <option value="addEntry">Add entry</option>
               <option value="removeEntry">Remove entry</option>
               <option value="editEntry">Edit entry</option>
             </select>
+            <br><br>
+            <input type="submit" value="confirm">
           </form>
     </body>
 </html>
-
-<script>
-    function actionFunc() {
-        var e = document.getElementById("choice");
-        window.location.href = "editPages/".concat(e.value).concat(".html");
-    }
-</script>
