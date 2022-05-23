@@ -1,6 +1,9 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+
+var mysql = require("./dbConn.js");
+
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 app.get('/', function (req, res) {
@@ -38,8 +41,12 @@ app.post('/viewResult/', urlencodedParser, function (req, res) {
     //query results and return
 })
 
-var server = app.listen(8081, 'localhost', function () {
+var server = app.listen(process.argv[2], 'localhost', function () {
    var host = server.address().address
    var port = server.address().port
    console.log("Listening at http://%s:%s", host, port)
+})
+
+server.on("connection", function(client) {
+    console.log("New connection from: " + client.address().address);
 })
