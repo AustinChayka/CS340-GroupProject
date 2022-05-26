@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <style>
+    table, th, td {
+    border:1px solid black;
+    }
+    </style>
+    <body>
+        <table>
+            {{#with results.[0]}}
+            <tr>
+                {{#each this}}
+                    <th>{{@key}}</th>
+                {{/each}}
+            </tr>
+            {{/with}}
+            {{#each results}}
+            <tr>
+                {{#each this}}
+                    <td>{{this}}</td>
+                {{/each}}
+            </tr>
+            {{/each}}
+        </table>
+    </body>
+</html>
