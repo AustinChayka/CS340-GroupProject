@@ -5,14 +5,12 @@
     </head>
     <body>
         <form action="/searchResult/" method = "POST">
-            <label for="search">Choose a table to search:</label>
-            <select name="table" id="table">
-              <option value="location">location</option>
-              <option value="ecosystem">ecosystem</option>
-              <option value="biome">biome</option>
-              <option value="plant">plant</option>
-              <option value="animal">animal</option>
+            <label for="searchThing"> Search Ecosystems for </label>
+            <select name="thing" id="thing">
+              <option value="Animal">Animal</option>
+              <option value="Plant">Plant</option>
             </select>
+            <label for="searchName"> named </label>
             <input type="text" name="search" placeholder="Search..">
             <br><br>
             <input type="submit" value="search">

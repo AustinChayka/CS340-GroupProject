@@ -26,12 +26,18 @@ app.get('/search/', function (req, res) {
     res.sendFile(__dirname + '/search.html');
 })
 app.post('/searchResult/', urlencodedParser, function (req, res) {
-    result = {
-        table:req.body.table,
+    search = {
+        thing:req.body.thing,
         search:req.body.search 
     };
-    console.log(result);
-    //query results and return
+    var query = 'SELECT * FROM Ecosystem WHERE ' + search.thing + 's' + ' = (SELECT ' + search.thing + 'ID' + ' FROM ' + search.thing + ' WHERE CommonName = \"' + search.search + '\");';
+    console.log(query);
+    mysql.pool.query(query, function (err, r, f) {
+        if(err) res.sendFile(__dirname + '/error.html');
+        results = r;
+        console.log(results);
+        res.render("results", {results : results});
+    });
 })
 app.get('/view/', function (req, res) {
     res.sendFile(__dirname + '/view.html');
@@ -39,6 +45,7 @@ app.get('/view/', function (req, res) {
 app.post('/viewResult/', urlencodedParser, function (req, res) {
     var t = req.body.table;
     mysql.pool.query('SELECT * FROM ' + t + ';', function (err, r, f) {
+        if(err) res.sendFile(__dirname + '/error.html');
         results = r;
         console.log(results);
         res.render("results", {results : results});
