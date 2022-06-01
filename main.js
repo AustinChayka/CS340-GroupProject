@@ -15,12 +15,36 @@ app.get('/', function (req, res) {
 app.get('/edit/', function (req, res) {
     res.sendFile(__dirname + '/edit.html');
 })
-app.post('/editAction/', urlencodedParser, function (req, res) {
-    result = {
-        choice:req.body.choice
+app.get('/edit/add/', function (req, res) {
+    res.sendFile(__dirname + '/editPages/addEntry.html');
+})
+app.post('/edit/addEntry/', urlencodedParser, function (req, res) {
+    var t = req.body.table;
+    res.sendFile(__dirname + '/editPages/add' + t + '.html')
+})
+app.post('/edit/addEntry/Animal', urlencodedParser, function (req, res) {
+    var t = req.body.table;
+    res.sendFile(__dirname + '/editPages/add' + t + '.html')
+})
+app.post('/edit/addEntry/Animal/confirm', urlencodedParser, function (req, res) {
+    data = {
+        commonName: req.body.CommonName == '' ? "NULL" : req.body.CommonName,
+        genus: req.body.Genus == '' ? "NULL" : req.body.Genus,
+        species: req.body.Species == '' ? "NULL" : req.body.Species,
+        subspecies: req.body.Subspecies == '' ? "NULL" : req.body.Subspecies
     };
-    console.log(result);
-    //query results and return
+    mysql.pool.query("INSERT INTO Animal (CommonName, Genus, Species, Subspecies) VALUES (?, ?, ?, ?);", [data.commonName, data.genus, data.species, data.subspecies], function (err, r) {
+        if(err) res.sendFile(__dirname + '/error.html');
+        console.log(r.insertId);
+        res.sendFile(__dirname + '/confirm.html');
+    });
+    console.log(data)
+})
+app.get('/edit/remove/', function (req, res) {
+    res.sendFile(__dirname + '/editPages/removeEntry.html');
+})
+app.get('/edit/edit/', function (req, res) {
+    res.sendFile(__dirname + '/editPages/editEntry.html');
 })
 app.get('/search/', function (req, res) {
     res.sendFile(__dirname + '/search.html');

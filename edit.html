@@ -4,15 +4,10 @@
         <header><a href = "/">Home</a></header>
     </head>
     <body>
-        <form action = "/editAction/" method = "POST">
-            <label for="choice">Choose action:</label>
-            <select name="choice" id="choice">
-              <option value="addEntry">Add entry</option>
-              <option value="removeEntry">Remove entry</option>
-              <option value="editEntry">Edit entry</option>
-            </select>
-            <br><br>
-            <input type="submit" value="confirm">
-          </form>
+        <ul>
+          <li><a href = "/edit/add/">Add Entry</a></li>
+          <li><a href = "/edit/remove/">Remove Entry</a></li>
+          <li><a href = "/edit/edit/">Edit Entry</a></li>
+        </ul>
     </body>
 </html>
