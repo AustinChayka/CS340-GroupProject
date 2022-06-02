@@ -1,0 +1,40 @@
+<html>
+    <style>
+    table, th, td {
+    border:1px solid black;
+    }
+    </style>
+    <head>
+        <title>Add Entry</title>
+        <header><a href = "/">Home</a></header>
+    </head>
+    <body>
+        <form action = "/edit/editEntry/Animal/confirm" method = "POST">
+                <label for="table">Edit Animal with ID:</label>
+                <input type="text" name="ID" placeholder="ID">
+                <br>
+                <label for="table">New data:</label>
+                <input type="text" name="CommonName" placeholder="CommonName">
+                <input type="text" name="Genus" placeholder="Genus">
+                <input type="text" name="Species" placeholder="Species">
+                <input type="text" name="Subspecies" placeholder="Subspecies">
+            <input type="submit" value="confirm">
+        </form>
+        <table>
+            {{#with results.results.[0]}}
+            <tr>
+                {{#each this}}
+                    <th>{{@key}}</th>
+                {{/each}}
+            </tr>
+            {{/with}}
+            {{#each results.results}}
+            <tr>
+                {{#each this}}
+                    <td>{{this}}</td>
+                {{/each}}
+            </tr>
+            {{/each}}
+        </table>
+    </body>
+</html>

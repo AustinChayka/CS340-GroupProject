@@ -1,0 +1,29 @@
+<html>
+    <style>
+    table, th, td {
+    border:1px solid black;
+    }
+    </style>
+    <body>
+        <form action = "/edit/removeEntry/{{results.table}}/confirm" method = "POST">
+                <input type="text" name="ID" placeholder="ID">
+            <input type="submit" value="remove">
+        </form>
+        <table>
+            {{#with results.results.[0]}}
+            <tr>
+                {{#each this}}
+                    <th>{{@key}}</th>
+                {{/each}}
+            </tr>
+            {{/with}}
+            {{#each results.results}}
+            <tr>
+                {{#each this}}
+                    <td>{{this}}</td>
+                {{/each}}
+            </tr>
+            {{/each}}
+        </table>
+    </body>
+</html>

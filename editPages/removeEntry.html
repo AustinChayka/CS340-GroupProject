@@ -1,9 +1,21 @@
 <html>
     <head>
-        <title>Remove Entry</title>
-        <header><a href = "../index.html">Home</a></header>
+        <title>Add Entry</title>
+        <header><a href = "/">Home</a></header>
     </head>
     <body>
-        <h1>PHP Here</h1>
+        <form action = '/edit/removeEntry/', method = "POST">
+            <label for="table">Choose a table to add entry to:</label>
+            <select name="table" id="table">
+              <!--<option value="Location">Location</option>
+              <option value="Ecosystem">Ecosystem</option>
+              <option value="Biome">Biome</option>-->
+              <option value="Plant">Plant</option>
+              <option value="Animal">Animal</option>
+            </select>
+            <br><br>
+            <input type="submit" value="view">
+          </form>
+    </body>
     </body>
 </html>
