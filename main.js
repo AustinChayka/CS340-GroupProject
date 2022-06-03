@@ -58,6 +58,21 @@ app.post('/edit/addEntry/Plant/confirm', urlencodedParser, function (req, res) {
     });
     console.log(data)
 })
+app.post('/edit/addEntry/Biome', urlencodedParser, function (req, res) {
+    var t = req.body.table;
+    res.sendFile(__dirname + '/editPages/add' + t + '.html')
+})
+app.post('/edit/addEntry/Biome/confirm', urlencodedParser, function (req, res) {
+    data = {
+        name: req.body.Name == '' ? "NULL" : req.body.Name
+    };
+    mysql.pool.query("INSERT INTO Biome (Name) VALUES (?);", [data.name], function (err, r) {
+        if(err) res.sendFile(__dirname + '/error.html');
+        console.log(r.insertId);
+        res.sendFile(__dirname + '/confirm.html');
+    });
+    console.log(data)
+})
 
 app.post('/edit/addEntry/Location', urlencodedParser, function (req, res) {
     var t = req.body.table;
@@ -90,7 +105,7 @@ app.post('/edit/addEntry/Ecosystem/confirm', urlencodedParser, function (req, re
         plants: req.body.Plants == '' ? "NULL" : req.body.Plants,
         animals: req.body.Animals == '' ? "NULL" : req.body.Animals
     };
-    mysql.pool.query("INSERT INTO Ecosystem (Biome, Location, Plants, Animals) VALUES (?, ?, ?, ?);", [data.biome, data.location, data.plants, data.animals], function (err, r){
+    mysql.pool.query("INSERT INTO Ecosystem (Biome, Location, Plants, Animals) VALUES((SELECT BiomeID from Biome where BiomeID = ?), (SELECT LocationID from Location where LocationID = ?), (SELECT PlantID from Plant where PlantID = ?), (SELECT AnimalID from Animal where AnimalID = ?);", [data.biome, data.location, data.plants, data.animals], function (err, r){
         if(err) res.sendFile(__dirname + '/error.html');
         console.log(r.insertId);
         res.sendFile(__dirname + '/confirm.html');
@@ -140,6 +155,15 @@ app.post('/edit/removeEntry/Location/confirm', urlencodedParser, function (req, 
         res.sendFile(__dirname + '/confirm.html');
     });
 })
+app.post('/edit/removeEntry/Biome/confirm', urlencodedParser, function (req, res) {
+    var id = req.body.ID;
+    console.log(id);
+    mysql.pool.query("DELETE FROM Biome WHERE BiomeID = ?;", [id], function (err) {
+        if(err) res.sendFile(__dirname + '/error.html');
+        res.sendFile(__dirname + '/confirm.html');
+    });
+})
+
 app.get('/edit/edit/', function (req, res) {
     res.sendFile(__dirname + '/editPages/editEntry.html');
 })
@@ -179,6 +203,16 @@ app.post('/edit/editEntry/Plant/confirm', urlencodedParser, function (req, res) 
         subspecies: req.body.Subspecies
     };
     mysql.pool.query("UPDATE Plant SET CommonName = ?, Genus = ?, Species = ?, Subspecies = ? WHERE PlantID = ?;", [data.commonName, data.genus, data.species, data.subspecies, data.id], function (err) {
+        if(err) res.sendFile(__dirname + '/error.html');
+        res.sendFile(__dirname + '/confirm.html');
+    });
+})
+app.post('/edit/editEntry/Biome/confirm', urlencodedParser, function (req, res) {
+    var data = {
+        id: req.body.ID,
+        name: req.body.Name
+    };
+    mysql.pool.query("UPDATE Biome SET Name = ? WHERE BiomeID = ?;", [data.name, data.id], function (err) {
         if(err) res.sendFile(__dirname + '/error.html');
         res.sendFile(__dirname + '/confirm.html');
     });
@@ -227,7 +261,7 @@ app.post('/viewResult/', urlencodedParser, function (req, res) {
         console.log(results);
         res.render("results", {results : results});
     });
-});
+})
 
 var server = app.listen(process.argv[2], 'localhost', function () { //rm localhost for server version
    var host = server.address().address
