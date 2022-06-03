@@ -1,0 +1,42 @@
+<html>
+    <style>
+    table, th, td {
+    border:1px solid black;
+    }
+    </style>
+    <head>
+        <title>Add Entry</title>
+        <header><a href = "/">Home</a></header>
+    </head>
+    <body>
+        <form action = "/edit/editEntry/Location/confirm" method = "POST">
+                <label for="table">Edit Location with ID:</label>
+                <input type="text" name="ID" placeholder="ID">
+                <br>
+                <label for="table">New data:</label>
+                <input type="text" name="Name" placeholder="Name">
+                <input type="number" name="Latitude" placeholder="Latitude">
+                <input type="number" name="Longitude" placeholder="Longitude">
+                <input type="number" name="Area" placeholder="Area">
+                <input type="number" name="AvgTemperature" placeholder="AvgTemperature">
+                <input type="number" name="AvgRainfall" placeholder="AvgRainfall">
+            <input type="submit" value="confirm">
+        </form>
+        <table>
+            {{#with results.results.[0]}}
+            <tr>
+                {{#each this}}
+                    <th>{{@key}}</th>
+                {{/each}}
+            </tr>
+            {{/with}}
+            {{#each results.results}}
+            <tr>
+                {{#each this}}
+                    <td>{{this}}</td>
+                {{/each}}
+            </tr>
+            {{/each}}
+        </table>
+    </body>
+</html>

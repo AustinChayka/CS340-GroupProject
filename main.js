@@ -58,6 +58,29 @@ app.post('/edit/addEntry/Plant/confirm', urlencodedParser, function (req, res) {
     });
     console.log(data)
 })
+
+app.post('/edit/addEntry/Location', urlencodedParser, function (req, res) {
+    var t = req.body.table;
+    res.sendFile(__dirname + '/editPages/add' + t + '.html')
+})
+app.post('/edit/addEntry/Location/confirm', urlencodedParser, function (req, res){
+    data = {
+        name: req.body.Name == '' ? "NULL" : req.body.Name,
+        latitude: req.body.Latitude == '' ? "NULL" : req.body.Latitude,
+        longitude: req.body.Longitude == '' ? "NULL" : req.body.Longitude,
+        area: req.body.Area == '' ? "NULL" : req.body.Area,
+        avgTemperature: req.body.AvgTemperature == '' ? "NULL" : req.body.AvgTemperature,
+        avgRainfall: req.body.AvgRainfall == '' ? "NULL" : req.body.AvgRainfall        
+    };
+    mysql.pool.query("INSERT INTO Location (Name, Latitude, Longitude, Area, AvgTemperature, AvgRainfall) VALUES (?, ?, ?, ?, ?, ?);", [data.name, data.latitude, data.longitude, data.area, data.avgTemperature, data.avgRainfall], function (err, r){
+        if(err) res.sendFile(__dirname + '/error.html');
+        console.log(r.insertId);
+        res.sendFile(__dirname + '/confirm.html');
+    });
+    console.log(data)
+})
+
+
 app.get('/edit/remove/', function (req, res) {
     res.sendFile(__dirname + '/editPages/removeEntry.html');
 })
