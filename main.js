@@ -100,12 +100,12 @@ app.post('/edit/addEntry/Ecosystem', urlencodedParser, function (req, res) {
 })
 app.post('/edit/addEntry/Ecosystem/confirm', urlencodedParser, function (req, res){
     data = {
-        biome: req.body.Biome == '' ? "NULL" : req.body.Biome,
-        location: req.body.Location == '' ? "NULL" : req.body.Location,
-        plants: req.body.Plants == '' ? "NULL" : req.body.Plants,
-        animals: req.body.Animals == '' ? "NULL" : req.body.Animals
+        biomeID: req.body.BiomeID == '' ? "NULL" : req.body.BiomeID,
+        locationID: req.body.LocationID == '' ? "NULL" : req.body.LocationID,
+        plantID: req.body.PlantID == '' ? "NULL" : req.body.PlantID,
+        animalID: req.body.AnimalID == '' ? "NULL" : req.body.AnimalID       
     };
-    mysql.pool.query("INSERT INTO Ecosystem (Biome, Location, Plants, Animals) VALUES((SELECT BiomeID from Biome where BiomeID = ?), (SELECT LocationID from Location where LocationID = ?), (SELECT PlantID from Plant where PlantID = ?), (SELECT AnimalID from Animal where AnimalID = ?);", [data.biome, data.location, data.plants, data.animals], function (err, r){
+    mysql.pool.query("INSERT INTO Ecosystem (Biome, Location, Plants, Animals) VALUES ((SELECT BiomeID from Biome where BiomeID = ?), (SELECT LocationID from Location where LocationID = ?), (SELECT PlantID from Plant where PlantID = ?), (SELECT AnimalID from Animal where AnimalID = ?));", [data.biomeID, data.locationID, data.plantID, data.animalID], function (err, r){
         if(err) res.sendFile(__dirname + '/error.html');
         console.log(r.insertId);
         res.sendFile(__dirname + '/confirm.html');
@@ -159,6 +159,14 @@ app.post('/edit/removeEntry/Biome/confirm', urlencodedParser, function (req, res
     var id = req.body.ID;
     console.log(id);
     mysql.pool.query("DELETE FROM Biome WHERE BiomeID = ?;", [id], function (err) {
+        if(err) res.sendFile(__dirname + '/error.html');
+        res.sendFile(__dirname + '/confirm.html');
+    });
+})
+app.post('/edit/removeEntry/Ecosystem/confirm', urlencodedParser, function (req, res) {
+    var id = req.body.ID;
+    console.log(id);
+    mysql.pool.query("DELETE FROM Ecosystem WHERE EcosystemID = ?;", [id], function (err) {
         if(err) res.sendFile(__dirname + '/error.html');
         res.sendFile(__dirname + '/confirm.html');
     });
