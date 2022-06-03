@@ -79,6 +79,24 @@ app.post('/edit/addEntry/Location/confirm', urlencodedParser, function (req, res
     });
     console.log(data)
 })
+app.post('/edit/addEntry/Ecosystem', urlencodedParser, function (req, res) {
+    var t = req.body.table;
+    res.sendFile(__dirname + '/editPages/add' + t + '.html')
+})
+app.post('/edit/addEntry/Ecosystem/confirm', urlencodedParser, function (req, res){
+    data = {
+        biome: req.body.Biome == '' ? "NULL" : req.body.Biome,
+        location: req.body.Location == '' ? "NULL" : req.body.Location,
+        plants: req.body.Plants == '' ? "NULL" : req.body.Plants,
+        animals: req.body.Animals == '' ? "NULL" : req.body.Animals
+    };
+    mysql.pool.query("INSERT INTO Ecosystem (Biome, Location, Plants, Animals) VALUES (?, ?, ?, ?);", [data.biome, data.location, data.plants, data.animals], function (err, r){
+        if(err) res.sendFile(__dirname + '/error.html');
+        console.log(r.insertId);
+        res.sendFile(__dirname + '/confirm.html');
+    });
+    console.log(data)
+})
 
 
 app.get('/edit/remove/', function (req, res) {
@@ -110,6 +128,14 @@ app.post('/edit/removeEntry/Plant/confirm', urlencodedParser, function (req, res
     var id = req.body.ID;
     console.log(id);
     mysql.pool.query("DELETE FROM Plant WHERE PlantID = ?;", [id], function (err) {
+        if(err) res.sendFile(__dirname + '/error.html');
+        res.sendFile(__dirname + '/confirm.html');
+    });
+})
+app.post('/edit/removeEntry/Location/confirm', urlencodedParser, function (req, res) {
+    var id = req.body.ID;
+    console.log(id);
+    mysql.pool.query("DELETE FROM Location WHERE LocationID = ?;", [id], function (err) {
         if(err) res.sendFile(__dirname + '/error.html');
         res.sendFile(__dirname + '/confirm.html');
     });
@@ -157,6 +183,22 @@ app.post('/edit/editEntry/Plant/confirm', urlencodedParser, function (req, res) 
         res.sendFile(__dirname + '/confirm.html');
     });
 })
+app.post('/edit/editEntry/Location/confirm', urlencodedParser, function (req, res) {
+    var data = {
+        id: req.body.ID,
+        name: req.body.Name,
+        latitude: req.body.Latitude,
+        longitude: req.body.Longitude,
+        area: req.body.Area,
+        avgTemperature: req.body.AvgTemperature,
+        avgRainfall: req.body.AvgRainfall
+    };
+    mysql.pool.query("UPDATE Location SET Name = ?, Latitude = ?, Longitude = ?, Area = ?, AvgTemperature = ?, AvgRainfall = ? WHERE LocationID = ?;", [data.name, data.latitude, data.longitude, data.area, data.avgTemperature, data.avgRainfall, data.id], function (err) {
+        if(err) res.sendFile(__dirname + '/error.html');
+        res.sendFile(__dirname + '/confirm.html');
+    });
+})
+
 app.get('/search/', function (req, res) {
     res.sendFile(__dirname + '/search.html');
 })

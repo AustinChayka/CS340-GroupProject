@@ -8,11 +8,11 @@
         <br>
         <form action = "/edit/addEntry/Location/confirm" method = "POST">
                 <input type="text" name="Name" placeholder="Name">
-                <input type="number" name="Latitude" placeholder="Latitude">
-                <input type="number" name="Longitude" placeholder="Longitude">
-                <input type="number" name="Area" placeholder="Area">
-                <input type="number" name="AvgTemperature" placeholder="AvgTemperature">
-                <input type="number" name="AvgRainfall" placeholder="AvgRainfall">
+                <input type="number" step=".00000001" name="Latitude" placeholder="Latitude">
+                <input type="number" step=".00000001" name="Longitude" placeholder="Longitude">
+                <input type="number" step="any" name="Area" placeholder="Area">
+                <input type="number" step="any" name="AvgTemperature" placeholder="AvgTemperature">
+                <input type="number" step="any" name="AvgRainfall" placeholder="AvgRainfall">
             <input type="submit" value="add">
         </form>
     </body>
