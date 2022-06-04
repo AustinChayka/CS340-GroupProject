@@ -51,6 +51,7 @@ DROP TABLE IF EXISTS `Biome`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Biome` (
   `BiomeID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`BiomeID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -80,12 +81,12 @@ CREATE TABLE `Ecosystem` (
   PRIMARY KEY (`EcosytemID`),
   KEY `Biome` (`Biome`),
   KEY `Location` (`Location`),
-  KEY `Plants` (`Plants`),
-  KEY `Animals` (`Animals`),
+  KEY `Plant` (`Plant`),
+  KEY `Animal` (`Animal`),
   CONSTRAINT `Ecosystem_ibfk_1` FOREIGN KEY (`Biome`) REFERENCES `Biome` (`BiomeID`),
   CONSTRAINT `Ecosystem_ibfk_2` FOREIGN KEY (`Location`) REFERENCES `Location` (`LocationID`),
-  CONSTRAINT `Ecosystem_ibfk_3` FOREIGN KEY (`Plants`) REFERENCES `Plant` (`PlantID`),
-  CONSTRAINT `Ecosystem_ibfk_4` FOREIGN KEY (`Animals`) REFERENCES `Animal` (`AnimalID`)
+  CONSTRAINT `Ecosystem_ibfk_3` FOREIGN KEY (`Plant`) REFERENCES `Plant` (`PlantID`),
+  CONSTRAINT `Ecosystem_ibfk_4` FOREIGN KEY (`Animal`) REFERENCES `Animal` (`AnimalID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
