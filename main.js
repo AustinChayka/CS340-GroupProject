@@ -149,7 +149,7 @@ app.post('/edit/removeEntry/', urlencodedParser, function (req, res) {
     //get table choice
     var t = req.body.table;
     //get table entries from server
-    mysql.pool.query('SELECT * FROM ?;', [t], function (err, r, f) {
+    mysql.pool.query('SELECT * FROM ' + t + ';', [t], function (err, r, f) {
         //if there was an error with query redirect to error page
         if(err) res.sendFile(__dirname + '/error.html');
         results = {
@@ -227,7 +227,7 @@ app.post('/edit/editEntry/', urlencodedParser, function (req, res) {
     //get table choice
     var t = req.body.table;
     //get table entries from server
-    mysql.pool.query('SELECT * FROM ?;', [t], function (err, r, f) {
+    mysql.pool.query('SELECT * FROM ' + t + ';', [t], function (err, r, f) {
         //if there was an error with query redirect to error page
         if(err) res.sendFile(__dirname + '/error.html');
         results = {
@@ -356,7 +356,7 @@ app.post('/viewResult/', urlencodedParser, function (req, res) {
     //get table choice
     var t = req.body.table;
     //submit SQL query to server
-    mysql.pool.query('SELECT * FROM ?;', [t], function (err, r, f) {
+    mysql.pool.query('SELECT * FROM ' + t + ';', function (err, r, f) {
         //if there was an error with query redirect to error page
         if(err) res.sendFile(__dirname + '/error.html');
         results = r;
