@@ -240,6 +240,19 @@ app.post('/edit/editEntry/Location/confirm', urlencodedParser, function (req, re
         res.sendFile(__dirname + '/confirm.html');
     });
 })
+app.post('/edit/editEntry/Ecosystem/confirm', urlencodedParser, function (req, res) {
+    var data = {
+        id: req.body.ID,
+        biomeID: req.body.BiomeID,
+        locationID: req.body.LocationID,
+        plantID: req.body.PlantID,
+        animalID: req.body.AnimalID
+    };
+    mysql.pool.query("UPDATE Ecosystem SET Biome = (SELECT BiomeID from Biome WHERE BiomeID = ?), Location = (SELECT LocationID from Location WHERE LocationID = ?), Plant = (SELECT PlantID from Plant WHERE PlantID = ?), Animal = (SELECT AnimalID from Animal WHERE AnimalID = ?) WHERE EcosystemID = ?;", [data.biomeID, data.locationID, data.plantID, data.animalID, data.id], function (err) {
+        if(err) res.sendFile(__dirname + '/error.html');
+        res.sendFile(__dirname + '/confirm.html');
+    });
+})
 
 app.get('/search/', function (req, res) {
     res.sendFile(__dirname + '/search.html');

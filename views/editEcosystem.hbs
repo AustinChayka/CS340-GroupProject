@@ -1,0 +1,40 @@
+<html>
+    <style>
+    table, th, td {
+    border:1px solid black;
+    }
+    </style>
+    <head>
+        <title>Add Entry</title>
+        <header><a href = "/">Home</a></header>
+    </head>
+    <body>
+        <form action = "/edit/editEntry/Ecosystem/confirm" method = "POST">
+                <label for="table">Edit Ecosystem with ID:</label>
+                <input type="text" name="ID" placeholder="ID">
+                <br>
+                <label for="table">New data:</label>
+                <input type="number" name="BiomeID" placeholder="BiomeID">
+                <input type="number" name="LocationID" placeholder="LocationID">
+                <input type="number" name="PlantID" placeholder="PlantID">
+                <input type="number" name="AnimalID" placeholder="AnimalID">
+            <input type="submit" value="confirm">
+        </form>
+        <table>
+            {{#with results.results.[0]}}
+            <tr>
+                {{#each this}}
+                    <th>{{@key}}</th>
+                {{/each}}
+            </tr>
+            {{/with}}
+            {{#each results.results}}
+            <tr>
+                {{#each this}}
+                    <td>{{this}}</td>
+                {{/each}}
+            </tr>
+            {{/each}}
+        </table>
+    </body>
+</html>
