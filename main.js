@@ -167,6 +167,7 @@ app.post('/edit/removeEntry/Animal/confirm', urlencodedParser, function (req, re
     //submit SQL query to server
     mysql.pool.query("DELETE FROM Animal WHERE AnimalID = ?;", [id], function (err) {
         //if there was an error with query redirect to error page
+        console.log(err);
         if(err) res.sendFile(__dirname + '/error.html');
         //after success redirect to confimration page
         res.sendFile(__dirname + '/confirm.html');
