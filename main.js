@@ -105,14 +105,13 @@ app.post('/edit/addEntry/Ecosystem/confirm', urlencodedParser, function (req, re
         plantID: req.body.PlantID == '' ? "NULL" : req.body.PlantID,
         animalID: req.body.AnimalID == '' ? "NULL" : req.body.AnimalID       
     };
-    mysql.pool.query("INSERT INTO Ecosystem (Biome, Location, Plants, Animals) VALUES ((SELECT BiomeID from Biome where BiomeID = ?), (SELECT LocationID from Location where LocationID = ?), (SELECT PlantID from Plant where PlantID = ?), (SELECT AnimalID from Animal where AnimalID = ?));", [data.biomeID, data.locationID, data.plantID, data.animalID], function (err, r){
+    mysql.pool.query("INSERT INTO Ecosystem (Biome, Location, Plant, Animal) VALUES ((SELECT BiomeID from Biome where BiomeID = ?), (SELECT LocationID from Location where LocationID = ?), (SELECT PlantID from Plant where PlantID = ?), (SELECT AnimalID from Animal where AnimalID = ?));", [data.biomeID, data.locationID, data.plantID, data.animalID], function (err, r){
         if(err) res.sendFile(__dirname + '/error.html');
         console.log(r.insertId);
         res.sendFile(__dirname + '/confirm.html');
     });
     console.log(data)
 })
-
 
 app.get('/edit/remove/', function (req, res) {
     res.sendFile(__dirname + '/editPages/removeEntry.html');
